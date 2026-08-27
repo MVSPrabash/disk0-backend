@@ -3,6 +3,6 @@ import healthRouter from '../modules/health/health.routes.js'
 
 const router = Router();
 
-router.get('/health', healthRouter);
+router.use('/health', healthRouter);
 
 export default router;
