@@ -4,16 +4,22 @@
   "description": "<div align=\"center\">   <h1 style=\"font-family: monospace;\">disk0</h1>   <p>A cloud storage application</p> </div>",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MVSPrabash/disk0-backend.git"
   },
   "keywords": [],
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/MVSPrabash/disk0-backend/issues"
   },
-  "homepage": "https://github.com/MVSPrabash/disk0-backend#readme"
+  "homepage": "https://github.com/MVSPrabash/disk0-backend#readme",
+  "devDependencies": {
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
 }
