@@ -1,0 +1,19 @@
+{
+  "name": "disk0-backend",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">   <h1 style=\"font-family: monospace;\">disk0</h1>   <p>A cloud storage application</p> </div>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MVSPrabash/disk0-backend.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MVSPrabash/disk0-backend/issues"
+  },
+  "homepage": "https://github.com/MVSPrabash/disk0-backend#readme"
+}
