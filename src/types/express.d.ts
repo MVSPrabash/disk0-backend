@@ -1,8 +1,13 @@
 declare global {
   namespace Express {
     interface Request {
-      user?: {
+      user?: {          // JWT payload flow
         id: string;
+      };
+      validated?: {
+        body?: unknown;
+        params?: unknown;
+        query?: unknown;
       };
     }
   }

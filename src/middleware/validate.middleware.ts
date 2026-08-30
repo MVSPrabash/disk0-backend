@@ -8,25 +8,33 @@ import { z } from 'zod';
 
 import ValidationError from '../errors/ValidationError.js';
 
-const validateBody = (schema: z.ZodType) => async (
+type ValidationSchema = {
+  body?: z.ZodObject,
+  query?: z.ZodObject,
+  params?: z.ZodObject,
+};
+
+const validate = (schema: ValidationSchema) => async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
-    req.body = await schema.parseAsync(req.body);
+    req.validated = {};
+
+    if (schema.body) req.validated.body = await schema.body.parseAsync(req.body);
+    if (schema.query) req.validated.query = await schema.query.parseAsync(req.query);
+    if (schema.params) req.validated.params = await schema.params.parseAsync(req.params);
 
     next();
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      next(new ValidationError(err.issues));
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      next(new ValidationError(error.issues));
       return ;
     }
 
-    next(err);
+    next(error);
   }
-};
+}
 
-export {
-  validateBody,
-};
+export default validate;

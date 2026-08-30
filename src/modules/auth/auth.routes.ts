@@ -12,27 +12,26 @@ import {
   refreshSchema,
 } from './auth.schema.js';
 
-import { validateBody } from '../../middleware/validate.middleware.js';
-import authenticate from '../../middleware/auth.middleware.js';
+import validate from '../../middleware/validate.middleware.js';
 
 
 const router = Router();
 
 router.post(
   '/register',
-  validateBody(registerSchema),
+  validate({ body: registerSchema }),
   registerController
 );
 
 router.post(
   '/login',
-  validateBody(loginSchema),
+  validate({ body: loginSchema }),
   loginController
 );
 
 router.post(
   '/refresh',
-  validateBody(refreshSchema),
+  validate({ body: refreshSchema }),
   refreshController
 );
 
