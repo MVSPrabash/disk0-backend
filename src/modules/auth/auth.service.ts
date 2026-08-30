@@ -4,6 +4,7 @@ import {
   type User,
   type LoginInput,
   type AuthTokens,
+  TokenPayload,
 } from './auth.types.js';
 
 import {
@@ -16,9 +17,8 @@ import argon2 from 'argon2';
 import { z } from 'zod';
 import UnauthorizedError from '../../errors/UnauthorizedError.js';
 import ConflictError from '../../errors/ConflictError.js';
-import { generateAccessToken, generateRefreshToken } from '../../utils/jwt.js';
+import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../../utils/jwt.js';
 
-// TODO: Use AppError class with error middleware for error handling
 const registerService = async (
   input: RegistrationInput
 ): Promise<PublicUser> => {
@@ -77,7 +77,16 @@ const loginService = async (input: LoginInput): Promise<AuthTokens> => {
   return { accessToken, refreshToken };  
 };
 
+const refreshService = async (refreshToken: string): Promise<string> => {
+  const payload: TokenPayload = verifyRefreshToken(refreshToken);
+
+  const accessToken = generateAccessToken(payload.sub);
+
+  return accessToken;
+};
+
 export { 
   registerService,
   loginService,
+  refreshService,
 };

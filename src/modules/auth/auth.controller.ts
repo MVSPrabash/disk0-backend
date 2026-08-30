@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { registerService, loginService } from './auth.service.js'
+import { registerService, loginService, refreshService } from './auth.service.js'
 
 const registerController = async (req: Request, res: Response) => {
   const user = await registerService(req.body);
@@ -18,7 +18,18 @@ const loginController = async (req: Request, res: Response) => {
   });
 };
 
+const refreshController = async (req: Request, res: Response) => {
+  const refreshToken = req.body.refreshToken;
+
+  const accessToken = await refreshService(refreshToken);
+
+  res.json({
+    accessToken
+  });
+};
+
 export {
   registerController,
   loginController,
+  refreshController,
 };
