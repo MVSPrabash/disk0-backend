@@ -28,10 +28,15 @@ type PublicUser = {
   created_at: Date
 };
 
+type TokenPayload = {
+  sub: string,
+}
+
 export {
   RegistrationInput,
   LoginInput,
   User,
   PublicUser,
   AuthTokens,
+  TokenPayload,
 };
