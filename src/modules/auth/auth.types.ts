@@ -5,6 +5,11 @@ type RegistrationInput = z.infer<typeof registerSchema>;
 
 type LoginInput = z.infer<typeof loginSchema>;
 
+type AuthTokens = {
+  accessToken: string,
+  refreshToken: string,
+};
+
 // Full information about user
 type User = {
   id: string,
@@ -28,4 +33,5 @@ export {
   LoginInput,
   User,
   PublicUser,
-}
+  AuthTokens,
+};
