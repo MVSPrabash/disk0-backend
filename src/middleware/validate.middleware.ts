@@ -6,42 +6,27 @@ import {
 
 import { z } from 'zod';
 
-type ValidationSource = 'body' | 'param' | 'query';
+import ValidationError from '../errors/ValidationError.js';
 
-interface RequestSchema {
-  body?:    z.ZodType;
-  query?:   z.ZodType;
-  params?:  z.ZodType;
-};
-
-const validate = (schema: RequestSchema) => async (
+const validateBody = (schema: z.ZodType) => async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {
-    if (schema.body) {
-      req.body = await schema.body.parseAsync(req.body);
-    }
-
-    if (schema.query) {
-      req.body = await schema.query.parseAsync(req.query);
-    }
-
-    if (schema.params) {
-      req.body = await schema.params.parseAsync(req.params);
-    }
+    req.body = await schema.parseAsync(req.body);
 
     next();
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new Error(error.message);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      next(new ValidationError(err.issues));
+      return ;
     }
-    else {
-      throw new Error(error.message);
-    }
-    return ;
+
+    next(err);
   }
 };
 
-export default validate;
+export {
+  validateBody,
+};
