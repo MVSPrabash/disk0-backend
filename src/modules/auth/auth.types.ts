@@ -1,13 +1,9 @@
-type RegistrationInput = {
-  username: string,
-  email: string,
-  password: string
-};
+import { z } from 'zod';
+import { registerSchema, loginSchema } from './auth.schema.js';
 
-type LoginInput = {
-  identifier: string,  // email or username
-  password: string
-};
+type RegistrationInput = z.infer<typeof registerSchema>; 
+
+type LoginInput = z.infer<typeof loginSchema>;
 
 // Full information about user
 type User = {

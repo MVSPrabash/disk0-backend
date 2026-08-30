@@ -11,28 +11,33 @@ import {
   findByEmail,
 } from './auth.repository.js';
 
+import ConflictError from '../../errors/ConflictError.js';
+
 import argon2 from 'argon2';
 
+// TODO: Use AppError class with error middleware for error handling
 const registerService = async (
   input: RegistrationInput
 ): Promise<PublicUser> => {
-  const usernameExists = await findByUsername(input.username);
+  const { username, email, password } = input;
+
+  const usernameExists = await findByUsername(username);
 
   if (usernameExists) {
-    throw new Error('username already exists');
+    throw new ConflictError('username already exists');
   }
     
-  const emailExists = await findByEmail(input.email);
+  const emailExists = await findByEmail(email);
 
   if (emailExists) {
-    throw new Error('Email already exists');
+    throw new ConflictError('email already exists');
   }
 
-  const passwordHash = await argon2.hash(input.password);
+  const passwordHash = await argon2.hash(password);
 
   const user: User = await createUser(
-    input.username,
-    input.email,
+    username,
+    email,
     passwordHash
   );
 

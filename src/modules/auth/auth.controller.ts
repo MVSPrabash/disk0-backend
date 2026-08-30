@@ -16,4 +16,4 @@ const loginController = (req: Request, res: Response) => {
 export {
   registerController,
   loginController,
-}
+};
