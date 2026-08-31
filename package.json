@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/MVSPrabash/disk0-backend#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.4.0",
@@ -29,6 +30,7 @@
   },
   "dependencies": {
     "argon2": "^0.45.1",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",

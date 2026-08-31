@@ -9,13 +9,7 @@ const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 const accessTokenExpiresIn = Number(process.env.ACCESS_TOKEN_EXPIRES_IN);
 const refreshTokenExpiresIn  = Number(process.env.REFRESH_TOKEN_EXPIRES_IN);
 
-if (!Number.isInteger(accessTokenExpiresIn) || accessTokenExpiresIn <= 0) {
-  throw new Error('Invalid access token expiration');
-}
-
-if (!Number.isInteger(refreshTokenExpiresIn) || refreshTokenExpiresIn <= 0) {
-  throw new Error('Invalid access token expiration');
-}
+const frontendHost = process.env.FRONTEND_HOST;
 
 if (!port) throw new Error('PORT not set');
 if (!databaseUrl) throw new Error('DATABASE_URL not set');
@@ -25,6 +19,16 @@ if (!refreshTokenSecret) throw new Error('Refresh token secret key not set');
 if (!accessTokenExpiresIn) throw new Error('Access Token expiration variable not set');
 if (!refreshTokenExpiresIn) throw new Error('Refresh Token expiration variable not set');
 
+if (!frontendHost) throw new Error('FRONTEND_HOST variable not set');
+
+if (!Number.isInteger(accessTokenExpiresIn) || accessTokenExpiresIn <= 0) {
+  throw new Error('Invalid access token expiration');
+}
+
+if (!Number.isInteger(refreshTokenExpiresIn) || refreshTokenExpiresIn <= 0) {
+  throw new Error('Invalid access token expiration');
+}
+
 export const env = {
   port,
   databaseUrl,
@@ -32,4 +36,5 @@ export const env = {
   refreshTokenSecret,
   accessTokenExpiresIn,
   refreshTokenExpiresIn,
+  frontendHost,
 };
