@@ -1,12 +1,11 @@
 import { type Request, type Response } from 'express'
 import { registerService, loginService, refreshService } from './auth.service.js'
-import { refreshSchema } from './auth.schema.js';
-import { z } from 'zod';
 import type ValidatedRequest from '../../types/validated-request.js';
 import type {
   LoginInput,
   RegistrationInput,
 } from './auth.types.js';
+import UnauthorizedError from '../../errors/UnauthorizedError.js';
 
 const registerController = async (req: Request, res: Response) => {
   const { body } = (req as ValidatedRequest<RegistrationInput>).validated;
@@ -23,16 +22,21 @@ const loginController = async (req: Request, res: Response) => {
 
   const { accessToken, refreshToken } = await loginService(body);
 
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+  });
+
   res.status(200).json({
     accessToken,
-    refreshToken,
   });
 };
 
 const refreshController = async (req: Request, res: Response) => {
-  const { body } = (req as ValidatedRequest<z.infer<typeof refreshSchema>>).validated;
+  const refreshToken = req.cookies['refreshToken'];
 
-  const refreshToken = body.refreshToken;
+  if (!refreshToken) {
+    throw new UnauthorizedError('No refresh token');
+  }
 
   const accessToken = await refreshService(refreshToken);
 

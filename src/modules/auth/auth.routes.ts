@@ -9,7 +9,6 @@ import {
 import {
   registerSchema,
   loginSchema,
-  refreshSchema,
 } from './auth.schema.js';
 
 import validate from '../../middleware/validate.middleware.js';
@@ -31,7 +30,6 @@ router.post(
 
 router.post(
   '/refresh',
-  validate({ body: refreshSchema }),
   refreshController
 );
 

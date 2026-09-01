@@ -1,7 +1,7 @@
 declare global {
   namespace Express {
     interface Request {
-      user?: {          // JWT payload flow
+      user?: {          // Authentication payload
         id: string;
       };
       validated?: {

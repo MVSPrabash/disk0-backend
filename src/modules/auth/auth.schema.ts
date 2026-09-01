@@ -32,12 +32,7 @@ const loginSchema = z.object({
   ,
 });
 
-const refreshSchema = z.object({
-  refreshToken: z.string(),
-});
-
 export {
   registerSchema,
   loginSchema,
-  refreshSchema,
 };

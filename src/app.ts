@@ -4,6 +4,7 @@ import errorMiddleware from './middleware/error.middleware.js';
 import NotFoundError from './errors/NotFoundError.js';
 import { env } from './config/env.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const app: Express = express();
 
@@ -26,6 +27,8 @@ const corsOptions: cors.CorsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(cookieParser());
 
 app.use(express.json());
 
