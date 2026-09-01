@@ -1,4 +1,9 @@
 import { Router } from 'express';
+import validate from '../../../middleware/validate.middleware.js';
+
+import {
+  FolderIdSchema
+} from './schema.js';
 
 import {
   getFolderController,
@@ -9,6 +14,7 @@ const router = Router();
 
 router.get(
   '/:id',
+  validate({ params: FolderIdSchema }),
   getFolderController
 );
 
