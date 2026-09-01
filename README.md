@@ -124,12 +124,7 @@ request body
 `identifier` can be username or email address
 
 - Refresh the Access Token: `POST /api/auth/refresh`
-request body
-```
-{
-  "refreshToken": "<refresh-token>"
-}
-```
+use the refresh token from cookies, and return a new accessToken
 
 Authenticated endpoints use Bearer token.
 
