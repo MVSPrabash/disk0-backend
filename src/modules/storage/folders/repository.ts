@@ -49,7 +49,7 @@ const getRootFolderContents = async (userId: string) => {
 
   const folders = await pool.query(
     `
-    SELECT * FROM folders
+    SELECT id, name, created_at, updated_at FROM folders
     WHERE user_id = $1 AND parent_id = $2;
     `,
     [userId, rootFolderId]
@@ -57,7 +57,7 @@ const getRootFolderContents = async (userId: string) => {
 
   const files = await pool.query(
     `
-    SELECT * FROM files
+    SELECT id, name, mime_type, size, created_at, updated_at FROM files
     WHERE user_id = $1 AND folder_id = $2;
     `,
     [userId, rootFolderId]
