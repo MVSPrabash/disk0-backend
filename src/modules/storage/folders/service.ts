@@ -2,8 +2,8 @@ import {
   getFolderContents,
 } from './repository.js';
 
-const getFolderService = async (id: string) => {
-  const contents = await getFolderContents(id);
+const getFolderService = async (folderId: string, userId: string) => {
+  const contents = await getFolderContents(folderId, userId);
 
   return contents;
 };

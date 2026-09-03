@@ -1,5 +1,8 @@
 import { Router } from 'express';
+
 import validate from '../../../middleware/validate.middleware.js';
+
+import authenticate from '../../../middleware/auth.middleware.js';
 
 import {
   FolderIdSchema
@@ -14,6 +17,7 @@ const router = Router();
 
 router.get(
   '/:id',
+  authenticate,
   validate({ params: FolderIdSchema }),
   getFolderController
 );
