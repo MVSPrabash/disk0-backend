@@ -41,10 +41,6 @@ const getRootFolderContents = async (userId: string) => {
     [userId]
   );
 
-  if (metadata.rowCount == 0) {
-    return null;
-  }
-
   const rootFolderId = metadata.rows[0].id;
 
   const folders = await pool.query(

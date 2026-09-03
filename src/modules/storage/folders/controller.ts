@@ -35,7 +35,9 @@ const getRootFolderController = async (req: Request, res: Response, next: NextFu
   const result = await getRootFolderService(userId);
 
   res.json({
-    result
+    metadata: result.metadata,
+    folders: result.folders,
+    files: result.files
   });
 };
 
