@@ -36,7 +36,7 @@ const getRootFolderContents = async (userId: string) => {
   const metadata = await pool.query(
     `
     SELECT * FROM folders
-    WHERE user_id = $1 AND name = 'root';
+    WHERE user_id = $1 AND parent_id IS NULL;
     `,
     [userId]
   );
