@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { getFolderService, getRootFolderContents } from './service.js';
+import { getFolderService, getRootFolderService } from './service.js';
 
 import {
   FoldersParams
@@ -32,7 +32,7 @@ const getRootFolderController = async (req: Request, res: Response, next: NextFu
     return ;
   }
 
-  const result = await getRootFolderContents(userId);
+  const result = await getRootFolderService(userId);
 
   res.json({
     result

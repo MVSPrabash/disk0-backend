@@ -17,5 +17,5 @@ const getRootFolderService = async (userId: string) => {
 
 export {
   getFolderService,
-  getRootFolderContents,
+  getRootFolderService,
 }
