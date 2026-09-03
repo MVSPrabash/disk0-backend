@@ -32,6 +32,45 @@ const getFolderContents = async (folderId: string, userId: string) => {
   };
 };
 
+const getRootFolderContents = async (userId: string) => {
+  const metadata = await pool.query(
+    `
+    SELECT * FROM folders
+    WHERE user_id = $1 AND name = 'root';
+    `,
+    [userId]
+  );
+
+  if (metadata.rowCount == 0) {
+    return null;
+  }
+
+  const rootFolderId = metadata.rows[0].id;
+
+  const folders = await pool.query(
+    `
+    SELECT * FROM folders
+    WHERE user_id = $1 AND parent_id = $2;
+    `,
+    [userId, rootFolderId]
+  );
+
+  const files = await pool.query(
+    `
+    SELECT * FROM files
+    WHERE user_id = $1 AND folder_id = $2;
+    `,
+    [userId, rootFolderId]
+  );
+
+  return {
+    metadata: metadata.rows[0],
+    folders: folders.rows,
+    files: files.rows
+  };
+};
+
 export {
   getFolderContents,
+  getRootFolderContents,
 }

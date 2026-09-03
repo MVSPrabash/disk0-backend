@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import { getFolderService } from './service.js';
+import { getFolderService, getRootFolderContents } from './service.js';
 
 import {
   FoldersParams
@@ -24,6 +24,22 @@ const getFolderController = async (req: Request<FoldersParams>, res: Response, n
   });
 }
 
+const getRootFolderController = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.user?.id;
+
+  if (!userId) {        // Never true
+    next(new Error());
+    return ;
+  }
+
+  const result = await getRootFolderContents(userId);
+
+  res.json({
+    result
+  });
+};
+
 export {
   getFolderController,
+  getRootFolderController,
 }
