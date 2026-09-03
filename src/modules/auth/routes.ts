@@ -4,12 +4,12 @@ import {
   registerController,
   loginController,
   refreshController,
-} from './auth.controller.js'
+} from './controller.js'
 
 import {
   registerSchema,
   loginSchema,
-} from './auth.schema.js';
+} from './schema.js';
 
 import validate from '../../middleware/validate.middleware.js';
 

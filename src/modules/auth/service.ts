@@ -5,13 +5,13 @@ import {
   type LoginInput,
   type AuthTokens,
   TokenPayload,
-} from './auth.types.js';
+} from './types.js';
 
 import {
   createUser,
   findByUsername,
   findByEmail,
-} from './auth.repository.js';
+} from './repository.js';
 
 import argon2 from 'argon2';
 import { z } from 'zod';

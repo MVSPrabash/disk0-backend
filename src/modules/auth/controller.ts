@@ -1,10 +1,10 @@
 import { type Request, type Response } from 'express'
-import { registerService, loginService, refreshService } from './auth.service.js'
+import { registerService, loginService, refreshService } from './service.js'
 import type ValidatedRequest from '../../types/validated-request.js';
 import type {
   LoginInput,
   RegistrationInput,
-} from './auth.types.js';
+} from './types.js';
 import UnauthorizedError from '../../errors/UnauthorizedError.js';
 
 const registerController = async (req: Request, res: Response) => {

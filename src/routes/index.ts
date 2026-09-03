@@ -1,6 +1,6 @@
 import Router from 'express';
 import healthRouter from '../modules/health/health.routes.js'
-import authRouter from '../modules/auth/auth.routes.js'
+import authRouter from '../modules/auth/routes.js'
 import authenticate from '../middleware/auth.middleware.js';
 import foldersRouter from '../modules/storage/folders/routes.js';
 

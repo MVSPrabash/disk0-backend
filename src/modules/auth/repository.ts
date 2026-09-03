@@ -1,5 +1,5 @@
 import pool from '../../config/db.js'
-import { type User } from './auth.types.js'
+import { type User } from './types.js'
 
 const findByUsername = async (username: string): Promise<User | undefined> => {
   const result = await pool.query(

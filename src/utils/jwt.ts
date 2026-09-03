@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
-import { TokenPayload } from '../modules/auth/auth.types.js';
+import { TokenPayload } from '../modules/auth/types.js';
 
 const generateRefreshToken = (id: string) => {
   return jwt.sign(

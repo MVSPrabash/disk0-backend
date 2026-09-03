@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { registerSchema, loginSchema } from './auth.schema.js';
+import { registerSchema, loginSchema } from './schema.js';
 
 type RegistrationInput = z.infer<typeof registerSchema>; 
 
