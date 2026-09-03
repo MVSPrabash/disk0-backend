@@ -66,7 +66,18 @@ const getRootFolderContents = async (userId: string) => {
   };
 };
 
+const createRootFolder = async (userId: string) => {
+  await pool.query(
+    `
+    INSERT INTO folders (user_id, parent_id, name)
+      VALUES ($1, NULL, 'root');
+    `,
+    [userId]
+  );
+};
+
 export {
   getFolderContents,
   getRootFolderContents,
+  createRootFolder,
 }

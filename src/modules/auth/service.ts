@@ -18,6 +18,7 @@ import { z } from 'zod';
 import UnauthorizedError from '../../errors/UnauthorizedError.js';
 import ConflictError from '../../errors/ConflictError.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../../utils/jwt.js';
+import { createRootFolder } from '../storage/folders/repository.js';
 
 const registerService = async (
   input: RegistrationInput
@@ -43,6 +44,8 @@ const registerService = async (
     email,
     passwordHash
   );
+
+  createRootFolder(user.id);
 
   return {
     id: user.id,
