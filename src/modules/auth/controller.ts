@@ -20,7 +20,7 @@ const registerController = async (req: Request, res: Response) => {
 const loginController = async (req: Request, res: Response) => {
   const { body } = (req as ValidatedRequest<LoginInput>).validated;
 
-  const { accessToken, refreshToken } = await loginService(body);
+  const { accessToken, refreshToken, publicUser } = await loginService(body);
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
@@ -28,6 +28,7 @@ const loginController = async (req: Request, res: Response) => {
 
   res.status(200).json({
     accessToken,
+    user: publicUser
   });
 };
 

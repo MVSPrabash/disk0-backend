@@ -3,7 +3,7 @@ import {
   type PublicUser,
   type User,
   type LoginInput,
-  type AuthTokens,
+  type LoginResult,
   TokenPayload,
 } from './types.js';
 
@@ -55,7 +55,7 @@ const registerService = async (
   };
 };
 
-const loginService = async (input: LoginInput): Promise<AuthTokens> => {
+const loginService = async (input: LoginInput): Promise<LoginResult> => {
   const isEmail = z.string().email().safeParse(input.identifier);
 
   let user = null;
@@ -77,7 +77,18 @@ const loginService = async (input: LoginInput): Promise<AuthTokens> => {
   const accessToken = generateAccessToken(user.id);
   const refreshToken = generateRefreshToken(user.id);
 
-  return { accessToken, refreshToken };  
+  const publicUser: PublicUser = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    created_at: user.created_at
+  };
+
+  return {
+    accessToken,
+    refreshToken,
+    publicUser
+  };  
 };
 
 const refreshService = async (refreshToken: string): Promise<string> => {
