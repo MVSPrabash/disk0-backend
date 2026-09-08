@@ -42,9 +42,6 @@ const createFolderService = async (userId: string, parentId: string, name: strin
   return metadata;
 };
 
-/**
- * @todo must not delete user root folder
-*/
 const deleteFolderService = async (
   userId: string,
   folderId: string
@@ -54,6 +51,12 @@ const deleteFolderService = async (
 
   if (!exists) {
     throw new NotFoundError('Folder not found');
+  }
+
+  const rootId = await getRootFolderId(userId);
+
+  if (rootId === folderId) {
+    throw new ConflictError('Root folder cannot be deleted');
   }
 
   await deleteFolder(userId, folderId);
