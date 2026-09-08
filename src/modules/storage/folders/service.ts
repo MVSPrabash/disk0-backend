@@ -1,6 +1,6 @@
 import {
   getFolderContents,
-  getRootFolderContents,
+  getRootFolderId,
   createFolder,
   folderExistsById,
   folderExistsByName,
@@ -17,7 +17,9 @@ const getFolderService = async (folderId: string, userId: string) => {
 };
 
 const getRootFolderService = async (userId: string) => {
-  const contents = await getRootFolderContents(userId);
+  const rootId = await getRootFolderId(userId);
+
+  const contents = await getFolderContents(rootId, userId);
 
   return contents;
 };
