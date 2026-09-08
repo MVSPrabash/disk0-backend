@@ -113,6 +113,16 @@ const folderExistsById = async (userId: string, id: string): Promise<boolean> =>
   return result.rowCount != 0;
 };
 
+const deleteFolder = async (userId: string, folderId: string) => {
+  await pool.query(
+    `
+    DELETE FROM folders
+    WHERE user_id = $1 AND id = $2;
+    `,
+    [userId, folderId]
+  );
+};
+
 export {
   getFolderContents,
   getRootFolderContents,
@@ -120,4 +130,5 @@ export {
   createFolder,
   folderExistsById,
   folderExistsByName,
+  deleteFolder,
 }

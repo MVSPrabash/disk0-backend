@@ -4,6 +4,7 @@ import {
   createFolder,
   folderExistsById,
   folderExistsByName,
+  deleteFolder,
 } from './repository.js';
 
 import ConflictError from '../../../errors/ConflictError.js';
@@ -37,10 +38,28 @@ const createFolderService = async (userId: string, parentId: string, name: strin
   const metadata = await createFolder(userId, parentId, name);
 
   return metadata;
-}
+};
+
+/**
+ * @todo must not delete user root folder
+*/
+const deleteFolderService = async (
+  userId: string,
+  folderId: string
+) => {
+
+  const exists = await folderExistsById(userId, folderId);
+
+  if (!exists) {
+    throw new NotFoundError('Folder not found');
+  }
+
+  await deleteFolder(userId, folderId);
+};
 
 export {
   getFolderService,
   getRootFolderService,
   createFolderService,
+  deleteFolderService,
 }

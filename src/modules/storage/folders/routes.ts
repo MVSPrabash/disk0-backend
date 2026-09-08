@@ -13,6 +13,7 @@ import {
   getFolderController,
   getRootFolderController,
   createFolderController,
+  deleteFolderController,
 } from './controller.js';
 
 
@@ -36,6 +37,13 @@ router.post(  // Body: id (parent_id)
   authenticate,
   validate({ body: CreateFolderSchema }),
   createFolderController
+);
+
+router.delete(
+  '/:id',
+  authenticate,
+  validate({ params: FolderIdSchema }),
+  deleteFolderController
 );
 
 export default router;

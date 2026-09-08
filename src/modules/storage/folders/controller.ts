@@ -4,6 +4,7 @@ import {
   getFolderService,
   getRootFolderService,
   createFolderService,
+  deleteFolderService,
 } from './service.js';
 
 import {
@@ -70,8 +71,30 @@ const createFolderController = async (
   });
 };
 
+const deleteFolderController = async (
+  req: Request<FoldersParams>,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = req.user?.id;
+
+  if (!userId) {  // Never True
+    next(new Error());
+    return ;
+  }
+
+  const folderId = req.params.id;
+
+  await deleteFolderService(userId, folderId);
+
+  res.json({
+    success: true
+  });
+};
+
 export {
   getFolderController,
   getRootFolderController,
   createFolderController,
+  deleteFolderController,
 }
