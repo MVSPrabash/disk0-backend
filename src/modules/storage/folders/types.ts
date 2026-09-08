@@ -1,8 +1,15 @@
 import { z } from 'zod';
-import { FolderIdSchema } from './schema.js';
+
+import {
+  CreateFolderSchema,
+  FolderIdSchema,
+} from './schema.js';
 
 type FoldersParams = z.infer<typeof FolderIdSchema>;
 
+type CreateFolderBody = z.infer<typeof CreateFolderSchema>;
+
 export {
   FoldersParams,
+  CreateFolderBody,
 }

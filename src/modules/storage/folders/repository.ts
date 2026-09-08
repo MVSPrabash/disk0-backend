@@ -76,8 +76,48 @@ const createRootFolder = async (userId: string) => {
   );
 };
 
+const createFolder = async (userId: string, parentId: string, name: string) => {
+  const result = await pool.query(
+    `
+    INSERT INTO folders (user_id, parent_id, name)
+    VALUES ($1, $2, $3)
+    RETURNING *;
+    `,
+    [userId, parentId, name]
+  );
+
+  return result.rows[0];
+};
+
+const folderExistsByName = async (userId: string, name: string): Promise<boolean> => {
+  const result = await pool.query(
+    `
+    SELECT FROM folders
+    WHERE user_id = $1 AND name = $2;
+    `,
+    [userId, name]
+  );
+
+  return result.rowCount != 0;
+}
+
+const folderExistsById = async (userId: string, id: string): Promise<boolean> => {
+  const result = await pool.query(
+    `
+    SELECT FROM folders
+    WHERE user_id = $1 AND id = $2;
+    `,
+    [userId, id]
+  );
+
+  return result.rowCount != 0;
+};
+
 export {
   getFolderContents,
   getRootFolderContents,
   createRootFolder,
+  createFolder,
+  folderExistsById,
+  folderExistsByName,
 }

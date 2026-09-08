@@ -5,12 +5,14 @@ import validate from '../../../middleware/validate.middleware.js';
 import authenticate from '../../../middleware/auth.middleware.js';
 
 import {
-  FolderIdSchema
+  FolderIdSchema,
+  CreateFolderSchema,
 } from './schema.js';
 
 import {
   getFolderController,
   getRootFolderController,
+  createFolderController,
 } from './controller.js';
 
 
@@ -27,6 +29,13 @@ router.get(
   authenticate,
   validate({ params: FolderIdSchema }),
   getFolderController
+);
+
+router.post(  // Body: id (parent_id)
+  '/',
+  authenticate,
+  validate({ body: CreateFolderSchema }),
+  createFolderController
 );
 
 export default router;

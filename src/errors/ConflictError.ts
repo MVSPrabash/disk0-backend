@@ -1,7 +1,7 @@
 import AppError from './AppError.js';
 
 class ConflictError extends AppError {
-  constructor (message: string = "Conflict: Resource Already Exists") {
+  constructor (message: string = "Resource Already Exists") {
     super(message, 409);
   }
 };
