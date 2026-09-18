@@ -4,7 +4,7 @@ import {
   type User,
   type LoginInput,
   type LoginResult,
-  TokenPayload,
+  type TokenPayload,
 } from './types.js';
 
 import {
@@ -19,6 +19,7 @@ import UnauthorizedError from '../../errors/UnauthorizedError.js';
 import ConflictError from '../../errors/ConflictError.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../../utils/jwt.js';
 import { createRootFolder } from '../storage/folders/repository.js';
+import pool from '../../config/db.js';
 
 const registerService = async (
   input: RegistrationInput
@@ -39,20 +40,35 @@ const registerService = async (
 
   const passwordHash = await argon2.hash(password);
 
-  const user: User = await createUser(
-    username,
-    email,
-    passwordHash
-  );
+  const client = await pool.connect();
 
-  createRootFolder(user.id);
+  try {
+    await client.query('BEGIN');
 
-  return {
-    id: user.id,
-    username: user.username,
-    email: user.email,
-    created_at: user.created_at
-  };
+    const user: User = await createUser(
+      client,
+      username,
+      email,
+      passwordHash
+    );
+
+    await createRootFolder(client, user.id);
+
+    await client.query('COMMIT');
+
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      created_at: user.created_at
+    };
+
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 const loginService = async (input: LoginInput): Promise<LoginResult> => {

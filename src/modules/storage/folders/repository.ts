@@ -1,3 +1,4 @@
+import { PoolClient } from 'pg';
 import pool from '../../../config/db.js';
 
 const getFolderContents = async (folderId: string, userId: string) => {
@@ -44,8 +45,11 @@ const getRootFolderId = async (userId: string) => {
   return result.rows[0].id;
 };
 
-const createRootFolder = async (userId: string) => {
-  await pool.query(
+const createRootFolder = async (
+  client: PoolClient,
+  userId: string
+) => {
+  await client.query(
     `
     INSERT INTO folders (user_id, parent_id, name)
       VALUES ($1, NULL, 'root');

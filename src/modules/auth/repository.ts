@@ -1,3 +1,4 @@
+import { PoolClient } from 'pg';
 import pool from '../../config/db.js'
 import { type User } from './types.js'
 
@@ -20,11 +21,12 @@ const findByEmail = async (email: string): Promise<User | undefined> => {
 };
 
 const createUser = async (
+  client: PoolClient,
   username: string,
   email: string, 
   passwordHash: string
 ):  Promise<User> => {
-  const result = await pool.query(
+  const result = await client.query(
     `
     INSERT INTO users (username, email, password_hash)
     VALUES ($1, $2, $3)
