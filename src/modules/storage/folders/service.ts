@@ -3,7 +3,7 @@ import {
   getRootFolderId,
   createFolder,
   folderExistsById,
-  folderExistsByName,
+  folderExistsByNameAndParent,
   deleteFolder,
 } from './repository.js';
 
@@ -31,7 +31,7 @@ const createFolderService = async (userId: string, parentId: string, name: strin
     throw new NotFoundError('Parent Folder not found');
   }
   
-  const exists = await folderExistsByName(userId, name);
+  const exists = await folderExistsByNameAndParent(userId, parentId, name);
 
   if (exists) {
     throw new ConflictError('Folder already exists');

@@ -71,16 +71,21 @@ const createFolder = async (userId: string, parentId: string, name: string) => {
   return result.rows[0];
 };
 
-const folderExistsByName = async (userId: string, name: string): Promise<boolean> => {
+const folderExistsByNameAndParent = async (
+  userId: string,
+  parentId: string,
+  name: string
+): Promise<boolean> => {
+
   const result = await pool.query(
     `
     SELECT FROM folders
-    WHERE user_id = $1 AND name = $2;
+    WHERE user_id = $1 AND parent_id = $2 AND name = $3;
     `,
-    [userId, name]
+    [userId, parentId, name]
   );
 
-  return result.rowCount != 0;
+  return result.rowCount !== 0;
 }
 
 const folderExistsById = async (userId: string, id: string): Promise<boolean> => {
@@ -92,7 +97,7 @@ const folderExistsById = async (userId: string, id: string): Promise<boolean> =>
     [userId, id]
   );
 
-  return result.rowCount != 0;
+  return result.rowCount !== 0;
 };
 
 const deleteFolder = async (userId: string, folderId: string) => {
@@ -111,6 +116,6 @@ export {
   createRootFolder,
   createFolder,
   folderExistsById,
-  folderExistsByName,
+  folderExistsByNameAndParent,
   deleteFolder,
 }
