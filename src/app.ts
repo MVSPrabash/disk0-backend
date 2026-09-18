@@ -5,8 +5,11 @@ import NotFoundError from './errors/NotFoundError.js';
 import { env } from './config/env.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
 
 const app: Express = express();
+
+app.use(morgan('dev'));
 
 const allowedOrigins = [ env.frontendHost ];
 
